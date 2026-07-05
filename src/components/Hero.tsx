@@ -108,47 +108,7 @@ export default function Hero({ onOpenConsultation }: HeroProps) {
               Explore Services
             </button>
           </motion.div>
-        </div>
-
-        {/* Right column: Subtle editorial stats/metadata panel */}
-        <div className="lg:col-span-4 hidden lg:block" id="hero-meta-panel">
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="bg-brand-card/75 backdrop-blur-md border border-gray-800/80 rounded-2xl p-6 text-white"
-          >
-            <div className="flex items-center justify-between border-b border-gray-800 pb-4 mb-4">
-              <span className="text-xs font-mono text-gray-400">AGENCY HEADQUARTERS</span>
-              <span className="text-xs font-mono text-brand-neon flex items-center gap-1">
-                <Compass className="h-3.5 w-3.5 animate-spin" /> LONDON
-              </span>
-            </div>
-            
-            <div className="space-y-4">
-              <div>
-                <span className="text-[10px] font-mono text-gray-500 block uppercase">Coordinates</span>
-                <span className="text-sm font-semibold text-white tracking-wider">51.5074° N, 0.1278° W</span>
-              </div>
-              
-              <div>
-                <span className="text-[10px] font-mono text-gray-500 block uppercase">Client Retention</span>
-                <div className="flex items-baseline gap-2 mt-0.5">
-                  <span className="text-3xl font-display font-bold text-brand-neon">96%</span>
-                  <span className="text-xs text-gray-400 font-mono">RETAINER RATE</span>
-                </div>
-              </div>
-
-              <div>
-                <span className="text-[10px] font-mono text-gray-500 block uppercase">Average Gross Profit Lift</span>
-                <div className="flex items-baseline gap-2 mt-0.5">
-                  <span className="text-3xl font-display font-bold text-brand-accent">+21%</span>
-                  <span className="text-xs text-gray-400 font-mono">POST-LAUNCH</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
+        </div>        
       </div>
 
       {/* Animated scroll down indicator */}
