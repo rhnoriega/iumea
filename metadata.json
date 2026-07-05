@@ -1,0 +1,6 @@
+{
+  "name": "IUMEA",
+  "description": "Bespoke operations optimization and systems engineering for premium brands, restaurants, and boutique venues globally. Always bespoke.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

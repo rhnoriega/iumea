@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Custom high-end "Natural Tones" brand palette variables */
+  --color-brand-dark: #FDFCFB; /* Clean Warm Alabaster White background */
+  --color-brand-card: #F5F2EF; /* Soft Warm Stone/Clay Card */
+  --color-brand-card-dark: #E8E4DF; /* Slightly deeper earthy clay */
+  --color-brand-neon: #FF5C35; /* Terracotta / Punchy organic orange */
+  --color-brand-neon-hover: #E54620; /* Deep terracotta hover */
+  --color-brand-accent: #121212; /* Deep modern off-black/charcoal */
+  --color-brand-sand: #FDFCFB;
+  --color-brand-sand-dark: #E8E4DF;
+  --color-brand-border: rgba(18, 18, 18, 0.08);
+}
+
+/* Custom visual micro-interactions and smooth scroll */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-brand-dark);
+  color: var(--color-brand-accent);
+}
+
+::selection {
+  background-color: var(--color-brand-neon);
+  color: #FDFCFB;
+}
+
+/* Hide scrollbar on image marquee containers */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
