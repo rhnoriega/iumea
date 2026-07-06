@@ -110,7 +110,7 @@ export default function Footer() {
             <h4 className="text-xs font-mono text-brand-accent tracking-widest uppercase">OFFICE CONVERSATIONS</h4>
             <div className="text-xs font-sans text-stone-600 space-y-1.5">
               <p>Email: <a href="mailto:hello@iumea.uk" className="hover:text-brand-neon underline">hello@iumea.uk</a></p>
-              <p>Phone: <a href="tel:+447946000000" className="hover:text-brand-neon">+44 (0) 7946 000 000</a></p>
+              <p>Phone: <a href="tel:+447984 981825" className="hover:text-brand-neon">+44 (0) 7984 9818 25</a></p>
               <p>Studio: <span className="text-stone-500">London, United Kingdom</span></p>
             </div>
           </div>
@@ -120,7 +120,7 @@ export default function Footer() {
         {/* Lower footer / Copyright bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-mono">
           <p className="text-stone-400">
-            © 2026 IUMEA LTD. ALL RIGHTS RESERVED.
+            © 2021 IUMEA LTD. ALL RIGHTS RESERVED.
           </p>
           
           <div className="flex items-center gap-6">

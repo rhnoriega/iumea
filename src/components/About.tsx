@@ -46,12 +46,11 @@ export default function About({ onOpenConsultation }: AboutProps) {
               <img
                 src={founderImg}
                 alt="Bilge Eroglu, Founder and Director of IUMEA"
-                className="max-w-xs w-full h-auto object-contain mx-auto grayscale-[15%] contrast-[1.03] hover:scale-105 transition-transform duration-700"
-                referrerPolicy="no-referrer"
+className="w-full h-auto object-cover grayscale-[15%] contrast-[1.03] group-hover:scale-105 transition-transform duration-700 ease-out rounded-2xl"                referrerPolicy="no-referrer"
               />
               {/* Overlay with subtle label */}
-              <div className="absolute bottom-3 left-3 bg-brand-dark/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-white/5">
-                <p className="text-[9px] font-mono text-brand-neon uppercase tracking-widest">FOUNDER & DIRECTOR</p>
+              <div className="absolute bottom-3 left-3 bg-brand-accent/90 backdrop-blur-sm px-3 py-1 rounded-lg border border-white/10">
+                <p className="text-[9px] font-mono text-white uppercase tracking-widest">FOUNDER & DIRECTOR</p>
               </div>
             </motion.div>
 
@@ -71,8 +70,8 @@ export default function About({ onOpenConsultation }: AboutProps) {
                   className="w-full h-full object-cover grayscale-[10%] contrast-[1.05] hover:scale-105 transition-transform duration-500"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute bottom-2 left-2 bg-brand-dark/80 backdrop-blur-sm px-2 py-0.5 rounded border border-white/5">
-                  <p className="text-[8px] font-mono text-white/90 uppercase">SYSTEMS AUDITING</p>
+                <div className="absolute bottom-2 left-2 bg-brand-accent/90 backdrop-blur-sm px-2 py-0.5 rounded border border-white/10">
+                  <p className="text-[8px] font-mono text-white uppercase">SYSTEMS AUDITING</p>
                 </div>
               </motion.div>
 
@@ -90,8 +89,8 @@ export default function About({ onOpenConsultation }: AboutProps) {
                   className="w-full h-full object-cover grayscale-[10%] contrast-[1.05] hover:scale-105 transition-transform duration-500"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute bottom-2 left-2 bg-brand-dark/80 backdrop-blur-sm px-2 py-0.5 rounded border border-white/5">
-                  <p className="text-[8px] font-mono text-white/90 uppercase">IN-VENUE LAUNCHES</p>
+                <div className="absolute bottom-2 left-2 bg-brand-accent/90 backdrop-blur-sm px-2 py-0.5 rounded border border-white/10">
+                  <p className="text-[8px] font-mono text-white uppercase">IN-VENUE LAUNCHES</p>
                 </div>
               </motion.div>
             </div>

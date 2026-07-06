@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Calendar, Clock, Sparkles, Building2, User, Mail, Send, CheckCircle2 } from 'lucide-react';
+import { X, Sparkles, Building2, User, Mail, Send, CheckCircle2 } from 'lucide-react';
 
 interface ConsultationModalProps {
   isOpen: boolean;
@@ -8,51 +8,17 @@ interface ConsultationModalProps {
   preselectedService?: string;
 }
 
-const TIME_SLOTS = [
-  '09:30 AM (GMT)',
-  '11:00 AM (GMT)',
-  '02:00 PM (GMT)',
-  '03:30 PM (GMT)',
-  '05:00 PM (GMT)'
-];
-
 export default function ConsultationModal({ isOpen, onClose, preselectedService = '' }: ConsultationModalProps) {
-  const [step, setStep] = useState<1 | 2>(1);
   const [formData, setFormData] = useState({
     name: '',
     businessName: '',
     email: '',
     service: preselectedService || 'concept',
-    date: '',
-    time: '',
     notes: ''
   });
   
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Generate the next 5 working days (excluding Sat/Sun) starting from today
-  const getUpcomingDays = () => {
-    const days = [];
-    const options: Intl.DateTimeFormatOptions = { weekday: 'short', day: 'numeric', month: 'short' };
-    let current = new Date();
-    
-    while (days.length < 5) {
-      const dayOfWeek = current.getDay();
-      if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Exclude Sat & Sun
-        days.push({
-          rawDate: current.toISOString().split('T')[0],
-          formatted: current.toLocaleDateString('en-GB', options),
-          dayNum: current.getDate(),
-          dayName: current.toLocaleDateString('en-GB', { weekday: 'short' })
-        });
-      }
-      current.setDate(current.getDate() + 1);
-    }
-    return days;
-  };
-
-  const days = getUpcomingDays();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -66,7 +32,7 @@ export default function ConsultationModal({ isOpen, onClose, preselectedService 
     }
   };
 
-  const validateStep1 = () => {
+  const validateForm = () => {
     const newErrors: Record<string, string> = {};
     if (!formData.name.trim()) newErrors.name = 'Please provide your name';
     if (!formData.businessName.trim()) newErrors.businessName = 'Please provide your venue or business name';
@@ -79,30 +45,21 @@ export default function ConsultationModal({ isOpen, onClose, preselectedService 
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleNextStep = (e: React.FormEvent) => {
+  const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateStep1()) {
-      setStep(2);
-    }
-  };
+    if (!validateForm()) return;
 
-  const handleBook = () => {
-    const newErrors: Record<string, string> = {};
-    if (!formData.date) newErrors.date = 'Please pick a consultation date';
-    if (!formData.time) newErrors.time = 'Please choose a preferred time slot';
-    
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
+    const subject = encodeURIComponent(`Consultation Request from ${formData.businessName || formData.name}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nBusiness / Venue: ${formData.businessName}\nEmail: ${formData.email}\nService: ${formData.service}\nNotes: ${formData.notes || 'N/A'}`
+    );
+    const mailtoLink = `mailto:hello@iumea.uk?subject=${subject}&body=${body}`;
+
+    window.location.href = mailtoLink;
 
     setIsSubmitting(true);
-    
-    // Simulate API submission
     setTimeout(() => {
       setIsSubmitting(false);
-      
-      // Save to localStorage for demo persistence
       const currentBookings = JSON.parse(localStorage.getItem('hospitality_consultations') || '[]');
       currentBookings.push({
         ...formData,
@@ -110,26 +67,19 @@ export default function ConsultationModal({ isOpen, onClose, preselectedService 
         timestamp: new Date().toISOString()
       });
       localStorage.setItem('hospitality_consultations', JSON.stringify(currentBookings));
-      
-      setStep(1);
-      // Trigger a custom success state handled locally or custom success callback
-      // For now, let's show an beautiful complete animation inside the modal
       setIsBookedSuccess(true);
-    }, 1500);
+    }, 1000);
   };
 
   const [isBookedSuccess, setIsBookedSuccess] = useState(false);
 
   const resetAndClose = () => {
     setIsBookedSuccess(false);
-    setStep(1);
     setFormData({
       name: '',
       businessName: '',
       email: '',
       service: preselectedService || 'concept',
-      date: '',
-      time: '',
       notes: ''
     });
     setErrors({});
@@ -172,7 +122,7 @@ export default function ConsultationModal({ isOpen, onClose, preselectedService 
                   <h3 className="font-display font-semibold text-lg tracking-tight">
                     {isBookedSuccess ? 'Consultation Booked' : 'Book a Consultation'}
                   </h3>
-                  <p className="text-xs text-stone-500 font-mono">EST. LONDON 2026</p>
+                  <p className="text-xs text-stone-500 font-mono">EST. LONDON 2021</p>
                 </div>
               </div>
               <button
@@ -223,27 +173,14 @@ export default function ConsultationModal({ isOpen, onClose, preselectedService 
                       <span className="text-stone-500">Venue / Business:</span>
                       <span className="font-semibold text-brand-accent">{formData.businessName}</span>
                     </div>
-                    <div className="flex justify-between border-b border-brand-card-dark/80 pb-2">
+                    <div className="flex justify-between">
                       <span className="text-stone-500">Service Category:</span>
                       <span className="font-semibold text-brand-accent capitalize">{formData.service}</span>
-                    </div>
-                    <div className="flex justify-between border-b border-brand-card-dark/80 pb-2">
-                      <span className="text-stone-500">Scheduled Date:</span>
-                      <span className="font-semibold text-brand-neon flex items-center gap-1">
-                        <Calendar className="h-3.5 w-3.5" /> 
-                        {days.find(d => d.rawDate === formData.date)?.formatted || formData.date}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-stone-500">Scheduled Time:</span>
-                      <span className="font-semibold text-brand-neon flex items-center gap-1">
-                        <Clock className="h-3.5 w-3.5" /> {formData.time}
-                      </span>
                     </div>
                   </div>
 
                   <p className="text-stone-500 text-xs mb-8 max-w-sm">
-                    A calendar invitation with a video link and preliminary brief questions has been dispatched to <span className="text-brand-accent font-medium">{formData.email}</span>. We look forward to reshaping your space.
+                    The form will be sent directly to <span className="text-brand-accent font-medium">hello@iumea.uk</span>. Please check your email client to complete the message.
                   </p>
 
                   <button
@@ -255,24 +192,7 @@ export default function ConsultationModal({ isOpen, onClose, preselectedService 
                   </button>
                 </motion.div>
               ) : (
-                /* Stepper Forms */
-                <div>
-                  {/* Step Indicators */}
-                  <div className="flex items-center justify-between mb-8 text-xs font-mono" id="step-indicators">
-                    <div className="flex items-center gap-2">
-                      <span className={`flex h-5 w-5 items-center justify-center rounded-full font-bold ${step === 1 ? 'bg-brand-neon text-brand-dark' : 'bg-brand-accent text-brand-dark'}`}>1</span>
-                      <span className={step === 1 ? 'text-brand-accent font-semibold' : 'text-stone-500'}>BUSINESS INTENT</span>
-                    </div>
-                    <div className="h-px flex-1 bg-brand-card-dark mx-4" />
-                    <div className="flex items-center gap-2">
-                      <span className={`flex h-5 w-5 items-center justify-center rounded-full font-bold ${step === 2 ? 'bg-brand-neon text-brand-dark' : 'bg-brand-card-dark text-stone-500'}`}>2</span>
-                      <span className={step === 2 ? 'text-brand-accent font-semibold' : 'text-stone-500'}>SCHEDULE CALL</span>
-                    </div>
-                  </div>
-
-                  {step === 1 ? (
-                    /* Step 1: Info & Intent */
-                    <form onSubmit={handleNextStep} className="space-y-4" id="step1-form">
+                <form onSubmit={handleSend} className="space-y-4" id="step1-form">
                       <div>
                         <label className="block text-xs font-mono uppercase text-stone-500 tracking-wider mb-1.5" htmlFor="name">
                           Your Name *
@@ -370,108 +290,16 @@ export default function ConsultationModal({ isOpen, onClose, preselectedService 
                         <button
                           type="submit"
                           className="flex items-center gap-2 px-6 py-3 bg-brand-neon text-brand-dark font-display font-semibold text-sm tracking-tight rounded-xl hover:bg-brand-neon-hover hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer shadow-lg shadow-brand-neon/15"
-                          id="modal-next-btn"
-                        >
-                          Continue to Calendar
-                          <Send className="h-4 w-4" />
-                        </button>
-                      </div>
-                    </form>
-                  ) : (
-                    /* Step 2: Date & Time Picker */
-                    <div className="space-y-6" id="step2-form">
-                      {/* Date Picker */}
-                      <div>
-                        <label className="block text-xs font-mono uppercase text-stone-500 tracking-wider mb-3">
-                          Select a Date *
-                        </label>
-                        <div className="grid grid-cols-5 gap-2" id="date-picker-grid">
-                          {days.map((d) => (
-                            <button
-                              key={d.rawDate}
-                              type="button"
-                              onClick={() => {
-                                setFormData(prev => ({ ...prev, date: d.rawDate }));
-                                if (errors.date) setErrors(prev => { const copy = { ...prev }; delete copy.date; return copy; });
-                              }}
-                              className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center transition-all cursor-pointer ${
-                                formData.date === d.rawDate
-                                  ? 'bg-brand-accent border-brand-accent text-brand-dark scale-[1.03] shadow-md shadow-brand-accent/25 font-bold'
-                                  : 'bg-brand-dark border-brand-card-dark/80 hover:border-brand-neon text-stone-600 hover:text-brand-neon'
-                              }`}
-                            >
-                              <span className="text-[10px] font-mono tracking-wider opacity-60 uppercase">{d.dayName}</span>
-                              <span className="text-lg font-display font-bold leading-none mt-1">{d.dayNum}</span>
-                            </button>
-                          ))}
-                        </div>
-                        {errors.date && <p className="text-red-500 text-xs mt-1 font-mono">{errors.date}</p>}
-                      </div>
-
-                      {/* Time Slots */}
-                      <div>
-                        <label className="block text-xs font-mono uppercase text-stone-500 tracking-wider mb-3">
-                          Select a Time Slot (London Time) *
-                        </label>
-                        <div className="grid grid-cols-2 gap-2" id="time-picker-grid">
-                          {TIME_SLOTS.map((t) => (
-                            <button
-                              key={t}
-                              type="button"
-                              onClick={() => {
-                                setFormData(prev => ({ ...prev, time: t }));
-                                if (errors.time) setErrors(prev => { const copy = { ...prev }; delete copy.time; return copy; });
-                              }}
-                              className={`flex items-center gap-2 p-3 text-xs font-medium rounded-xl border transition-all cursor-pointer ${
-                                formData.time === t
-                                  ? 'bg-brand-neon border-brand-neon text-brand-dark scale-[1.02] font-bold'
-                                  : 'bg-brand-dark border-brand-card-dark/80 hover:border-brand-neon text-stone-600 hover:text-brand-neon'
-                              }`}
-                            >
-                              <Clock className="h-3.5 w-3.5 opacity-70" />
-                              {t}
-                            </button>
-                          ))}
-                        </div>
-                        {errors.time && <p className="text-red-500 text-xs mt-1 font-mono">{errors.time}</p>}
-                      </div>
-
-                      <div className="pt-4 flex justify-between items-center border-t border-brand-card-dark">
-                        <button
-                          type="button"
-                          onClick={() => setStep(1)}
-                          className="px-4 py-2 text-xs font-mono text-stone-500 hover:text-brand-accent transition-colors cursor-pointer"
-                          id="modal-back-btn"
-                        >
-                          ← BACK TO DETAILS
-                        </button>
-
-                        <button
-                          type="button"
-                          disabled={isSubmitting}
-                          onClick={handleBook}
-                          className="flex items-center gap-2 px-6 py-3 bg-brand-neon text-brand-dark font-display font-semibold text-sm tracking-tight rounded-xl hover:bg-brand-neon-hover hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer disabled:opacity-55 disabled:cursor-not-allowed shadow-lg shadow-brand-neon/15"
-                          id="confirm-booking-btn"
+                          id="modal-send-btn"
                         >
                           {isSubmitting ? (
-                            <>
-                              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-brand-dark" fill="none" viewBox="0 0 24 24">
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                              </svg>
-                              Securing Slot...
-                            </>
+                            <>Sending...<Send className="h-4 w-4" /></>
                           ) : (
-                            <>
-                              Confirm Consultation
-                              <CheckCircle2 className="h-4 w-4" />
-                            </>
+                            <>Send<Send className="h-4 w-4" /></>
                           )}
                         </button>
                       </div>
-                    </div>
-                  )}
-                </div>
+                    </form>
               )}
             </div>
           </motion.div>

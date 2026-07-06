@@ -72,7 +72,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
           >
             <IumeaLogo className="w-11 h-11 text-brand-neon transition-all duration-300 group-hover:scale-105" />
             <div>
-              <span className="font-display font-black text-xl tracking-widest text-white block leading-none">
+              <span className="font-display font-black text-xl tracking-widest text-brand-accent block leading-none">
                 IUMÆ
               </span>
             </div>
@@ -85,7 +85,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleLinkClick(e, link.href)}
-                className="text-gray-300 hover:text-brand-neon transition-colors duration-200 relative py-1.5 group font-medium"
+                className="text-stone-700 hover:text-brand-neon font-semibold transition-colors duration-200 relative py-1.5 group"
               >
                 {link.label}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-neon transition-all duration-300 group-hover:w-full" />
@@ -108,7 +108,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-gray-300 hover:text-white rounded-lg hover:bg-gray-800/40 transition-colors"
+            className="md:hidden p-2 text-stone-700 hover:text-brand-neon rounded-lg hover:bg-brand-card-dark/40 transition-colors"
             aria-label="Toggle navigation menu"
             id="mobile-menu-toggle"
           >
@@ -137,7 +137,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 bottom-0 w-4/5 max-w-sm bg-brand-card border-l border-gray-800 p-8 flex flex-col justify-between"
+              className="fixed top-0 right-0 bottom-0 w-4/5 max-w-sm bg-brand-card border-l border-brand-card-dark p-8 flex flex-col justify-between"
               id="mobile-nav-container"
             >
               <div className="pt-20">
@@ -145,7 +145,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                   EST. LONDON / UK
                 </span>
                 
-                <nav className="flex flex-col gap-6 text-xl font-display font-semibold text-white">
+                <nav className="flex flex-col gap-6 text-xl font-display font-semibold text-stone-700">
                   {NAV_LINKS.map((link, idx) => (
                     <motion.a
                       initial={{ opacity: 0, x: 20 }}
@@ -154,7 +154,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                       key={link.label}
                       href={link.href}
                       onClick={(e) => handleLinkClick(e, link.href)}
-                      className="hover:text-brand-neon transition-colors duration-200 border-b border-gray-850 pb-3"
+                      className="hover:text-brand-neon transition-colors duration-200 border-b border-brand-card-dark pb-3"
                     >
                       {link.label}
                     </motion.a>
@@ -163,7 +163,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
               </div>
 
               <div className="space-y-6">
-                <div className="h-px bg-gray-800" />
+                <div className="h-px bg-brand-card-dark" />
                 <button
                   onClick={() => {
                     setIsOpen(false);
@@ -177,7 +177,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
                 </button>
                 
                 <p className="text-center text-[10px] font-mono text-gray-500">
-                  © 2026 IUMEA LTD.
+                  © 2021 IUMEA LTD.
                 </p>
               </div>
             </motion.div>

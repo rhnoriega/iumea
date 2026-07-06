@@ -70,6 +70,20 @@ export const SERVICES: ServiceItem[] = [
       'Supplier Network & Key-Account Introductions',
       'Commercial Sourcing & Venue Location Advisory'
     ]
+  },
+  {
+    id: 'service-operations-support',
+    title: 'Service & Operations Support',
+    description: 'Reliable operational and service support that keeps hospitality businesses running smoothly, from workforce coordination to guest-facing execution.',
+    longDescription: 'We provide reliable operational and service support to help hospitality businesses run efficiently. From day-to-day assistance and workforce coordination to maintaining high service standards, our team ensures seamless operations that enhance guest experiences and support your business objectives.',
+    icon: 'Sparkles',
+    category: 'Operations',
+    deliverables: [
+      'On-the-ground service coordination and shift supervision',
+      'Workforce planning and day-to-day operational support',
+      'Service standards enforcement and guest experience quality checks',
+      'Rapid response operational troubleshooting and continuity support'
+    ]
   }
 ];
 

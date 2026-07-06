@@ -20,7 +20,8 @@ export default function Projects() {
     'SAGE KITCHEN',
     'LA MAISON HIGHBURY',
     'THE FINSBURY PUB',
-    'ONE BROADWAY MARKET'
+    'ONE BROADWAY MARKET',
+    'THE OLD MILL FIRE STATION RESTAURANT'
   ];
 
   const column3 = [
